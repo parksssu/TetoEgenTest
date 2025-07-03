@@ -2432,9 +2432,14 @@
                     const imgX = (canvas.width - imgSize) / 2;
                     const imgY = 80;
                     
-                    // 배경 이미지 그리기 (결과 컸테이너의 배경 이미지 사용)
-                    const bgStyle = window.getComputedStyle(resultContainer);
-                    const bgImage = bgStyle.backgroundImage;
+                    // 배경 색상 그리기 (결과 컸테이너의 배경 색상 사용)
+                    const resultType = resultContainer.className.split(' ').pop();
+                    if (resultType.includes('teto')) {
+                        ctx.fillStyle = '#E6B566';
+                    } else {
+                        ctx.fillStyle = '#D4A574';
+                    }
+                    ctx.fillRect(imgX, imgY, imgSize, imgSize);
                     
                     // 캐릭터 이미지 그리기
                     ctx.save();
@@ -2467,7 +2472,8 @@
                         // 이미지와 텍스트 함께 공유 시도
                         const shareDataWithImage = {
                             title: '테토-에겐 성격 테스트 결과',
-                            text: `${shareText}\n\n${shareUrl}`,
+                            text: shareText,
+                            url: shareUrl,
                             files: [new File([blob], 'teto-egen-result.png', { type: 'image/png' })]
                         };
                         
@@ -2478,7 +2484,8 @@
                             // 이미지 공유가 안되면 텍스트와 URL만 공유
                             await navigator.share({
                                 title: '테토-에겐 성격 테스트 결과',
-                                text: `${shareText}\n\n${shareUrl}`
+                                text: shareText,
+                                url: shareUrl
                             });
                             return;
                         }
