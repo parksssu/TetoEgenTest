@@ -2453,59 +2453,54 @@
                     canvas.toBlob(resolve, 'image/png');
                 });
                 
-                // Web Share API 사용
-                if (navigator.share && navigator.canShare) {
-                    const shareData = {
-                        title: '테토-에겐 성격 테스트 결과',
-                        text: shareText,
-                        url: shareUrl,
-                        files: [new File([blob], 'teto-egen-result.png', { type: 'image/png' })]
-                    };
-                    
-                    if (navigator.canShare(shareData)) {
-                        await navigator.share(shareData);
-                    } else {
-                        // 파일 공유가 지원되지 않으면 텍스트만 공유
-                        await navigator.share({
+                // Web Share API 사용 - 이미지와 텍스트 함께 공유
+                if (navigator.share) {
+                    try {
+                        // 먼저 이미지와 텍스트 함께 공유 시도
+                        const shareDataWithImage = {
                             title: '테토-에겐 성격 테스트 결과',
-                            text: shareText,
-                            url: shareUrl
-                        });
+                            text: `${shareText}\n\n${shareUrl}`,
+                            files: [new File([blob], 'teto-egen-result.png', { type: 'image/png' })]
+                        };
+                        
+                        if (navigator.canShare && navigator.canShare(shareDataWithImage)) {
+                            await navigator.share(shareDataWithImage);
+                        } else {
+                            // 이미지 공유가 안되면 텍스트와 URL만 공유
+                            await navigator.share({
+                                title: '테토-에겐 성격 테스트 결과',
+                                text: shareText,
+                                url: shareUrl
+                            });
+                        }
+                    } catch (shareError) {
+                        // 공유 실패 시 대체 방법
+                        fallbackShare(shareText, shareUrl);
                     }
                 } else {
                     // Web Share API가 지원되지 않으면 클립보드에 복사
-                    await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+                    await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
                     alert('결과가 클립보드에 복사되었습니다! 어디든 붙여넣기 하세요 😊');
                 }
             } catch (error) {
                 console.error('공유 오류:', error);
                 // 오류 발생 시 기본 공유
-                if (navigator.share) {
-                    try {
-                        await navigator.share({
-                            title: '테토-에겐 성격 테스트 결과',
-                            text: shareText,
-                            url: shareUrl
-                        });
-                    } catch (shareError) {
-                        fallbackShare(shareText, shareUrl);
-                    }
-                } else {
-                    fallbackShare(shareText, shareUrl);
-                }
+                fallbackShare(shareText, shareUrl);
             }
         }
         
         // 대체 공유 방법
         function fallbackShare(shareText, shareUrl) {
+            const fullShareText = `${shareText}\n\n${shareUrl}`;
+            
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(`${shareText} ${shareUrl}`).then(() => {
-                    alert('결과가 클립보드에 복사되었습니다! 어디든 붙여넣기 하세요 😊');
+                navigator.clipboard.writeText(fullShareText).then(() => {
+                    alert('결과 텍스트와 링크가 클립보드에 복사되었습니다! 어디든 붙여넣기 하세요 😊');
                 }).catch(() => {
-                    prompt('아래 내용을 복사해주세요:', `${shareText} ${shareUrl}`);
+                    prompt('아래 내용을 복사해주세요:', fullShareText);
                 });
             } else {
-                prompt('아래 내용을 복사해주세요:', `${shareText} ${shareUrl}`);
+                prompt('아래 내용을 복사해주세요:', fullShareText);
             }
         }
 
