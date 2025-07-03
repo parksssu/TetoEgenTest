@@ -2472,8 +2472,7 @@
                         // 이미지와 텍스트 함께 공유 시도
                         const shareDataWithImage = {
                             title: '테토-에겐 성격 테스트 결과',
-                            text: shareText,
-                            url: shareUrl,
+                            text: `${shareText}\n\n${shareUrl}`,
                             files: [new File([blob], 'teto-egen-result.png', { type: 'image/png' })]
                         };
                         
@@ -2484,8 +2483,7 @@
                             // 이미지 공유가 안되면 텍스트와 URL만 공유
                             await navigator.share({
                                 title: '테토-에겐 성격 테스트 결과',
-                                text: shareText,
-                                url: shareUrl
+                                text: `${shareText}\n\n${shareUrl}`
                             });
                             return;
                         }
@@ -2504,8 +2502,7 @@
                     try {
                         await navigator.share({
                             title: '테토-에겐 성격 테스트 결과',
-                            text: shareText,
-                            url: shareUrl
+                            text: `${shareText}\n\n${shareUrl}`
                         });
                     } catch (fallbackError) {
                         alert('공유 기능을 사용할 수 없습니다.');
@@ -2584,8 +2581,7 @@
                 if (navigator.share) {
                     await navigator.share({
                         title: '테토-에겐 성격 테스트 결과',
-                        text: shareText,
-                        url: shareUrl
+                        text: `${shareText}\n\n${shareUrl}`
                     });
                     closeShareModal();
                 } else {
