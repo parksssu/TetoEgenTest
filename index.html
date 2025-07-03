@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테토-에겐 성격 테스트 🐱 나는 테토? 에겐?</title>
+    <title>테토-에겐 성격 테스트</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -301,18 +301,19 @@
             transform: scale(1.05) rotate(1deg);
             filter: drop-shadow(0 25px 70px rgba(230, 181, 102, 0.4));
         }
+        
+        @media (max-width: 768px) {
+            .cat-visual img:hover {
+                transform: scale(1.05);
+                box-shadow: 0 15px 40px rgba(230, 181, 102, 0.4);
+            }
+        }
 
         .cat-visual img:active {
             transform: scale(0.95);
         }
 
-        @media (max-width: 768px) {
-            .cat-visual {
-                min-height: 400px;
-                order: -1;
-                flex: 0 0 280px;
-            }
-        }
+
 
 
 
@@ -374,7 +375,7 @@
         @media (max-width: 768px) {
             .start-container {
                 flex-direction: column;
-                gap: 30px;
+                gap: 10px;
                 padding: 40px 20px;
             }
             
@@ -390,16 +391,41 @@
             .header h1 {
                 font-size: 56px;
                 transform: scale(1);
+                margin-bottom: 10px;
             }
             
             .header .subtitle {
                 font-size: 24px;
+                margin-bottom: 20px;
             }
             
             .cat-visual {
                 order: -1;
-                min-height: 450px;
-                flex: 0 0 300px;
+                min-height: 200px;
+                flex: 0 0 200px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 10px;
+                position: relative;
+            }
+            
+            .cat-visual img {
+                width: 180px;
+                height: 180px;
+                border-radius: 20px;
+                object-fit: cover;
+                object-position: top;
+                background: rgba(255, 255, 255, 0.8);
+                border: 2px solid #D9B88E;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .cat-visual img:hover {
+                transform: scale(1.05);
+                box-shadow: 0 15px 40px rgba(230, 181, 102, 0.4);
             }
         }
 
@@ -487,9 +513,79 @@
             margin: 0 20px;
         }
 
+        /* 모바일 최적화 */
         @media (max-width: 768px) {
+            .page:not(#start-page) {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+            
+            #question-page {
+                padding: 20px 15px;
+            }
+            
+            .question-header {
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            
+            .home-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .progress-container {
+                padding: 10px 15px;
+            }
+            
+            .question-number {
+                font-size: 1rem;
+            }
+            
             .progress-bar {
-                width: 60%;
+                width: 50%;
+                margin: 0 10px;
+            }
+            
+            .question-area {
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .character {
+                width: 200px;
+                height: 240px;
+            }
+            
+            .character img {
+                width: 100%;
+                height: 100%;
+            }
+            
+            .speech-bubble {
+                padding: 15px 20px;
+                max-width: 320px;
+                margin-bottom: 15px;
+            }
+            
+            .question-title {
+                font-size: 1.1rem;
+            }
+            
+            .choice-btn {
+                padding: 15px 20px;
+                font-size: 0.9rem;
+                max-width: 320px;
+            }
+            
+            .navigation-buttons {
+                max-width: 320px;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 14px;
             }
         }
 
@@ -1181,20 +1277,99 @@
         /* 반응형 */
         @media (max-width: 480px) {
             .container {
-                margin: 10px;
+                margin: 5px;
             }
             
-            .page {
-                padding: 30px 20px;
+            .page:not(#start-page) {
+                padding: 15px 10px;
+                margin: 5px;
+            }
+            
+            #question-page {
+                padding: 15px 10px;
             }
             
             .header h1 {
                 font-size: 2rem;
             }
             
+            .question-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+            
+            .progress-container {
+                padding: 8px 12px;
+            }
+            
+            .progress-bar {
+                width: 70%;
+                margin: 0 5px;
+            }
+            
+            .speech-bubble {
+                padding: 12px 15px;
+                max-width: 280px;
+            }
+            
+            .question-title {
+                font-size: 1rem;
+            }
+            
+            .choice-btn {
+                padding: 12px 15px;
+                font-size: 0.85rem;
+                max-width: 280px;
+            }
+            
+            .navigation-buttons {
+                max-width: 280px;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
             .result-cat {
-                width: 250px;
-                height: 250px;
+                width: 200px;
+                height: 200px;
+            }
+            
+            .card-title {
+                font-size: 1.8rem;
+            }
+            
+            .card-subtitle {
+                font-size: 1rem;
+            }
+            
+            .character-level {
+                font-size: 1rem;
+                padding: 8px 15px;
+            }
+            
+            .section-title {
+                font-size: 1rem;
+            }
+            
+            .feature-item {
+                font-size: 0.8rem;
+                padding: 10px 12px;
+            }
+            
+            .match-type {
+                font-size: 0.9rem;
+            }
+            
+            .match-reason {
+                font-size: 0.75rem;
+            }
+            
+            .character-desc {
+                font-size: 0.9rem;
             }
         }
 
@@ -1906,164 +2081,38 @@
             document.getElementById(pageId).classList.add('active');
         }
 
-        // 메인 고양이 이미지 변경 (더 귀여운 효과)
+        // 메인 고양이 이미지 변경
         function changeCat() {
             const img = document.getElementById('main-cat-img');
             
-            // 더블클릭 감지를 위한 변수
-            if (!window.clickCount) window.clickCount = 0;
-            window.clickCount++;
+            // 클릭 효과
+            img.style.transform = 'scale(0.9) rotate(-5deg)';
             
-            // 더블클릭 시 결과창으로 바로 이동 (테스트용)
-            if (window.clickCount === 2) {
-                window.clickCount = 0;
-                showTestResult();
-                return;
-            }
-            
-            // 단일 클릭 시 기존 동작
             setTimeout(() => {
-                if (window.clickCount === 1) {
-                    window.clickCount = 0;
-                    
-                    // 클릭 효과
-                    img.style.transform = 'scale(0.9) rotate(-5deg)';
-                    
-                    setTimeout(() => {
-                        try {
-                            const availableImages = getAvailableImages();
-                            currentCatIndex = (currentCatIndex + 1) % availableImages.length;
-                            img.src = availableImages[currentCatIndex];
-                        } catch (error) {
-                            currentCatIndex = (currentCatIndex + 1) % mainCatImages.length;
-                            img.src = mainCatImages[currentCatIndex];
-                        }
-                        
-                        // 바운스 효과
-                        img.style.transform = 'scale(1.1) rotate(5deg)';
-                        
-                        setTimeout(() => {
-                            img.style.transform = 'scale(1) rotate(0deg)';
-                        }, 200);
-                    }, 150);
-                    
-                    // 귀여운 사운드 효과 (시각적 피드백)
-                    showCatReaction();
+                try {
+                    const availableImages = getAvailableImages();
+                    currentCatIndex = (currentCatIndex + 1) % availableImages.length;
+                    img.src = availableImages[currentCatIndex];
+                } catch (error) {
+                    currentCatIndex = (currentCatIndex + 1) % mainCatImages.length;
+                    img.src = mainCatImages[currentCatIndex];
                 }
-            }, 300);
+                
+                // 바운스 효과
+                img.style.transform = 'scale(1.1) rotate(5deg)';
+                
+                setTimeout(() => {
+                    img.style.transform = 'scale(1) rotate(0deg)';
+                }, 200);
+            }, 150);
+            
+            // 귀여운 사운드 효과 (시각적 피드백)
+            showCatReaction();
         }
         
-        // 테스트용: 랜덤 성향 80% 결과 표시
-        function showTestResult() {
-            const types = ['teto', 'egen'];
-            const genders = ['male', 'female'];
-            
-            const randomType = types[Math.floor(Math.random() * types.length)];
-            const randomGender = genders[Math.floor(Math.random() * genders.length)];
-            
-            selectedGender = randomGender;
-            const personalityType = randomType;
-            
-            // 80% 달성으로 특별 캐릭터 해금
-            const resultKey = `${personalityType}-${selectedGender}2`;
-            unlockCharacter(resultKey);
-            
-            const result = results[resultKey];
-            
-            const resultTypeElement = document.getElementById('result-type');
-            resultTypeElement.textContent = result.type;
-            resultTypeElement.className = `result-type ${personalityType}`;
-            resultTypeElement.style.color = '#7F6751';
-            document.getElementById('result-subtitle').textContent = result.subtitle;
-            document.getElementById('result-cat-img').src = result.image;
-            document.getElementById('result-cat-container').className = `result-cat ${resultKey}`;
-            
-            // 80% 표시
-            document.getElementById('score-percentage').textContent = '80%';
-            
-            setTimeout(() => {
-                const gaugePointer = document.getElementById('gauge-pointer');
-                if (personalityType === 'teto') {
-                    gaugePointer.style.left = '80%';
-                } else {
-                    gaugePointer.style.left = '20%';
-                }
-            }, 500);
-            
-            // 상세 정보 표시
-            displayDetailedInfo(result);
-            
-            // 결과 페이지로 이동
-            showPage('result-page');
-        }
+
         
-        // 테스트용: 현재 캐릭터에 맞는 결과창 바로 표시
-        function showDirectResult() {
-            const img = document.getElementById('main-cat-img');
-            const currentImageSrc = img.src;
-            
-            // 현재 이미지에 따라 성별과 타입 결정
-            let resultKey;
-            if (currentImageSrc.includes('teto-male')) {
-                resultKey = 'teto-male';
-                selectedGender = 'male';
-            } else if (currentImageSrc.includes('egen-male')) {
-                resultKey = 'egen-male';
-                selectedGender = 'male';
-            } else if (currentImageSrc.includes('teto-female')) {
-                resultKey = 'teto-female';
-                selectedGender = 'female';
-            } else if (currentImageSrc.includes('egen-female')) {
-                resultKey = 'egen-female';
-                selectedGender = 'female';
-            } else {
-                // 기본값
-                resultKey = 'teto-male';
-                selectedGender = 'male';
-            }
-            
-            // 임시 점수 설정 (80% 달성)
-            const personalityType = resultKey.includes('teto') ? 'teto' : 'egen';
-            totalScore = personalityType === 'teto' ? 56 : 26; // 80% 달성 점수
-            
-            // 결과 표시
-            const result = results[resultKey];
-            
-            const resultTypeElement = document.getElementById('result-type');
-            resultTypeElement.textContent = result.type;
-            resultTypeElement.className = `result-type ${personalityType}`;
-            resultTypeElement.style.color = '#7F6751';
-            document.getElementById('result-subtitle').textContent = result.subtitle;
-            document.getElementById('result-cat-img').src = result.image;
-            document.getElementById('result-cat-container').className = `result-cat ${resultKey}`;
-            
-            // 성향 점수 계산 및 표시
-            const averageScore = totalScore / 15; // 15문항 기준
-            let scorePercentage;
-            if (personalityType === 'teto') {
-                scorePercentage = Math.round(((averageScore - 1) / 4) * 100);
-            } else {
-                scorePercentage = Math.round(((5 - averageScore) / 4) * 100);
-            }
-            document.getElementById('score-percentage').textContent = `${scorePercentage}%`;
-            
-            setTimeout(() => {
-                const gaugePointer = document.getElementById('gauge-pointer');
-                if (personalityType === 'teto') {
-                    gaugePointer.style.left = `${scorePercentage}%`;
-                } else {
-                    gaugePointer.style.left = `${100 - scorePercentage}%`;
-                }
-            }, 500);
-            
-            // 상세 정보 표시
-            displayDetailedInfo(result);
-            
-            // 결과 페이지로 이동
-            showPage('result-page');
-            
-            // 테스트용 알림 제거
-        }
+
         
         // 고양이 반응 표시
         function showCatReaction() {
