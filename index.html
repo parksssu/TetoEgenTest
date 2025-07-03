@@ -2406,6 +2406,20 @@
             const shareText = `나의 테토-에겐 테스트 결과는 "${type}"입니다! 🐱 당신도 테스트해보세요!`;
             const shareUrl = window.location.href;
             
+            // 모바일에서는 바로 기본 공유 기능 사용
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: '테토-에겐 성격 테스트 결과',
+                        text: `${shareText}\n\n${shareUrl}`
+                    });
+                    return;
+                } catch (shareError) {
+                    console.log('네이티브 공유 실패');
+                }
+            }
+            
+            // 데스크톱에서만 이미지 생성 및 모달 표시
             try {
                 // 캐릭터 이미지를 캔버스에 그리고 블롭으로 변환
                 const canvas = document.createElement('canvas');
@@ -2466,50 +2480,12 @@
                     canvas.toBlob(resolve, 'image/png');
                 });
                 
-                // Web Share API 사용 - 네이티브 공유 우선
-                if (navigator.share) {
-                    try {
-                        // 이미지와 텍스트 함께 공유 시도
-                        const shareDataWithImage = {
-                            title: '테토-에겐 성격 테스트 결과',
-                            text: `${shareText}\n\n${shareUrl}`,
-                            files: [new File([blob], 'teto-egen-result.png', { type: 'image/png' })]
-                        };
-                        
-                        if (navigator.canShare && navigator.canShare(shareDataWithImage)) {
-                            await navigator.share(shareDataWithImage);
-                            return;
-                        } else {
-                            // 이미지 공유가 안되면 텍스트와 URL만 공유
-                            await navigator.share({
-                                title: '테토-에겐 성격 테스트 결과',
-                                text: `${shareText}\n\n${shareUrl}`
-                            });
-                            return;
-                        }
-                    } catch (shareError) {
-                        console.log('네이티브 공유 실패, 모달 표시');
-                    }
-                }
-                
-                // Web Share API가 지원되지 않거나 실패한 경우 모달 표시
+                // 데스크톱에서 모달 표시
                 showShareModal(shareText, shareUrl, blob);
                 
             } catch (error) {
                 console.error('공유 오류:', error);
-                // 오류 발생 시 기본 공유 시도
-                if (navigator.share) {
-                    try {
-                        await navigator.share({
-                            title: '테토-에겐 성격 테스트 결과',
-                            text: `${shareText}\n\n${shareUrl}`
-                        });
-                    } catch (fallbackError) {
-                        alert('공유 기능을 사용할 수 없습니다.');
-                    }
-                } else {
-                    alert('이 브라우저에서는 공유 기능이 지원되지 않습니다.');
-                }
+                alert('공유 기능을 사용할 수 없습니다.');
             }
         }
         
