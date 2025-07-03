@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테토-에겐 성격 유형 테스트 | 새로운 UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #FFF9F2;
+            color: #333333;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+
+        .hero-cat {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto -20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-cat img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-cat img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            color: #61cff1;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #333333;
+            margin-bottom: 0;
+        }
+
+        /* Feature Cards */
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            height: 150px;
+            border-radius: 25px;
+            padding: 25px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card.analysis {
+            background-color: #fff1f1;
+        }
+
+        .feature-card.compatibility {
+            background-color: #fff4cd;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 28px;
+            color: #4f370a;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666666;
+            margin: 0;
+        }
+
+        /* Info Box */
+        .info-box {
+            background-color: #e7f9ff;
+            border-radius: 25px;
+            padding: 35px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .info-box p {
+            font-size: 22px;
+            color: #4f370a;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .info-box .highlight {
+            font-weight: 700;
+            color: #2F8F9D;
+        }
+
+        .info-box .title {
+            font-weight: 900;
+            color: #4f3708;
+            display: block;
+            text-align: center;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .cta-button {
+            background: linear-gradient(to bottom, #61cff1, #61cff1);
+            color: #FFFFFF;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 20px 0;
+            width: 100%;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(74, 161, 243, 0.3);
+        }
+
+        .cta-button:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Gender Selection */
+        .gender-selection {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .gender-selection.show {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .gender-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .gender-btn {
+            background: linear-gradient(to bottom, #61cff1, #61cff1);
+            color: #FFFFFF;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(74, 161, 243, 0.3);
+        }
+
+        .gender-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 20px 0;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-cat {
+                width: 300px;
+                height: 300px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                margin: 20px 0;
+            }
+
+            .feature-card {
+                padding: 15px;
+                height: auto;
+                min-height: 100px;
+            }
+
+            .info-box {
+                padding: 20px;
+                margin: 15px 0;
+            }
+
+            .cta-section {
+                margin: 20px 0;
+            }
+
+            .cta-button {
+                font-size: 18px;
+                padding: 12px 0;
+            }
+
+            .gender-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .gender-btn {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+        }
+
+        /* Additional Animations */
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-cat">
+                <img src="images/top-images.png" alt="테토-에겐 캐릭터">
+            </div>
+            <h1>테토-에겐 성격 유형<br/>테스트</h1>
+            <p>나의 성향을 간단히 알아보세요!</p>
+        </section>
+
+        <!-- Feature Cards -->
+        <section class="features">
+            <div class="feature-card analysis">
+                <img class="feature-icon" src="images/brain.png" alt="자아 분석 아이콘">
+                <h3>자아 분석</h3>
+            </div>
+            <div class="feature-card compatibility">
+                <img class="feature-icon" src="images/light.png" alt="이상형 궁합 아이콘">
+                <h3>이상형 궁합</h3>
+            </div>
+        </section>
+
+        <!-- Info Box -->
+        <section class="info-box">
+            <p>
+                <span class="title">테토-에겐 성격 유형이란?</span><br/>
+                &nbsp;&nbsp;다양한 매력을 가진 당신의 성향을 테스트를 통해 발견하고, 더 나은 소통법을 찾아보세요. 재미있는 결과가 기다리고 있습니다.
+            </p>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <button class="cta-button" onclick="startTest()">테스트 시작</button>
+            
+            <!-- Gender Selection -->
+            <div class="gender-selection" id="gender-selection">
+                <div class="gender-buttons">
+                    <button class="gender-btn" onclick="selectGender('male')">♂ 남성으로 시작</button>
+                    <button class="gender-btn" onclick="selectGender('female')">♀ 여성으로 시작</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function startTest() {
+            const genderSelection = document.getElementById('gender-selection');
+            genderSelection.classList.add('show');
+        }
+
+        function selectGender(gender) {
+            alert(`${gender === 'male' ? '남성' : '여성'}으로 테스트를 시작합니다! 🐱`);
+            // 여기에 성별에 따른 테스트 로직 추가
+        }
+
+        // 페이지 로드 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.feature-card, .info-box, .cta-section');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s ease-out';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 200 * (index + 1));
+            });
+        });
+    </script>
+</body>
+</html>
