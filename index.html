@@ -76,8 +76,19 @@
         .page {
             display: none;
         }
-
+        
         .page:not(#start-page) {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .page:not(#start-page):not(#loading-page) {
             padding: 50px 30px;
             text-align: center;
             min-height: 600px;
@@ -95,6 +106,12 @@
 
         .page.active {
             display: block;
+        }
+        
+        .page:not(#start-page).active {
+            opacity: 1;
+            pointer-events: auto;
+            position: relative;
         }
 
         /* 시작 페이지 - 매거진 스타일 */
@@ -505,7 +522,7 @@
         }
 
         .progress-bar {
-            width: 85%;
+            width: 80%;
             height: 12px;
             background: #E0E0E0;
             border-radius: 6px;
@@ -807,6 +824,166 @@
             transition: all 0.1s ease;
         }
 
+        /* 로딩 페이지 */
+        #loading-page {
+            background: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .loading-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            max-width: 350px;
+            padding: 0;
+            box-sizing: border-box;
+            background: none;
+        }
+        
+        .loading-cat {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            animation: catBounce 2s ease-in-out infinite;
+            position: relative;
+        }
+        
+
+        
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: rotate(0deg) scale(1); }
+            50% { opacity: 1; transform: rotate(180deg) scale(1.2); }
+        }
+        
+        .loading-cat img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .loading-text h2 {
+            font-family: 'Hakgyoansim', 'Gowun Dodum', sans-serif;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .loading-text p {
+            font-family: 'Gowun Dodum', sans-serif;
+            font-size: 1.1rem;
+            color: var(--secondary-text);
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+        
+        .loading-animation {
+            margin-top: 30px;
+        }
+        
+        .paw-prints {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .paw {
+            font-size: 24px;
+            animation: pawWave 1.5s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        
+        .paw:nth-child(1) { animation-delay: 0s; }
+        .paw:nth-child(2) { animation-delay: 0.3s; }
+        .paw:nth-child(3) { animation-delay: 0.6s; }
+        
+        @keyframes pawWave {
+            0%, 60%, 100% { 
+                transform: translateY(0px) scale(1);
+                opacity: 0.6;
+            }
+            30% { 
+                transform: translateY(-15px) scale(1.2);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .loading-container {
+                padding: 20px 15px;
+                max-width: 90%;
+            }
+            
+            .loading-cat {
+                width: 150px;
+                height: 150px;
+                margin-bottom: 20px;
+            }
+            
+            .loading-text h2 {
+                font-size: 1.4rem;
+                margin-bottom: 8px;
+            }
+            
+            .loading-text p {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+            
+            .loading-animation {
+                margin-top: 20px;
+            }
+            
+            .paw {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .loading-container {
+                padding: 15px 10px;
+            }
+            
+            .loading-cat {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .loading-text h2 {
+                font-size: 1.2rem;
+            }
+            
+            .loading-text p {
+                font-size: 0.9rem;
+            }
+            
+            .paw {
+                font-size: 18px;
+            }
+            
+            .paw-prints {
+                gap: 10px;
+            }
+        }
+
         /* 결과 페이지 */
         .result-cat {
             width: 320px;
@@ -993,17 +1170,10 @@
 
 
 
-        /* 결과 카드 스타일 */
-        .result-card {
+        /* 결과 페이지 직접 스타일 */
+        #result-page {
             max-width: 800px;
             margin: 0 auto;
-            background: #FFFFFF;
-            border-radius: 20px;
-            padding: 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 2px solid #D9B88E;
-            position: relative;
-            overflow: hidden;
         }
         
         /* 카드 헤더 */
@@ -1375,6 +1545,54 @@
 
         .hidden { display: none; }
         
+        /* 광고 스타일 */
+        .main-ad-container, .result-ad-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .web-ad {
+            display: block;
+        }
+        
+        .mobile-ad-group {
+            display: none;
+        }
+        
+        .vertical-ad {
+            position: fixed;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        
+        .result-vertical-ad {
+            right: -180px;
+        }
+        
+        .horizontal-ad {
+            margin: 20px auto;
+        }
+        
+        .mobile-ad {
+            margin: 15px auto;
+        }
+        
+        @media (max-width: 768px) {
+            .web-ad {
+                display: none;
+            }
+            
+            .mobile-ad-group {
+                display: block;
+            }
+            
+            .vertical-ad {
+                display: none;
+            }
+        }
+        
         /* 추가 애니메이션 키프레임 */
         @keyframes floatUp {
             0% {
@@ -1517,7 +1735,21 @@
                             <button class="start-btn" onclick="selectGender('male')">♂ 남성으로 시작</button>
                             <button class="start-btn" onclick="selectGender('female')">♀ 여성으로 시작</button>
                         </div>
+                        
+                        <!-- 메인 광고 영역 -->
+                        <div class="main-ad-container">
+                            <div class="web-ad horizontal-ad">
+                                <ins class="kakao_ad_area" data-ad-unit="DAN-JVfemloWC5OwBZwV" data-ad-width="300" data-ad-height="250"></ins>
+                            </div>
+                            <div class="mobile-ad-group">
+                                <div class="mobile-ad">
+                                    <ins class="kakao_ad_area" data-ad-unit="DAN-2w0KIuOkX1j03x86" data-ad-width="320" data-ad-height="100"></ins>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
+
                 </div>
                 
                 <div class="cat-visual">
@@ -1545,7 +1777,7 @@
             <div class="question-area">
                 <div class="character-container">
                     <div class="character" id="character">
-                        <img src="images/진성테토남.png" alt="캐릭터" style="width: 100%; height: 100%; object-fit: contain;">
+                        <img src="images/result-teto-male2.png" alt="캐릭터" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                 </div>
                 <div class="speech-bubble">
@@ -1565,9 +1797,29 @@
 
         </div>
 
+        <!-- 로딩 페이지 -->
+        <div id="loading-page" class="page">
+            <div class="loading-container">
+                <div class="loading-cat">
+                    <img id="loading-cat-img" src="" alt="로딩 중 고양이">
+                </div>
+                <div class="loading-text">
+                    <h2>결과를 분석하고 있어요...</h2>
+                    <p>잠시만 기다려주세요</p>
+                </div>
+                <div class="loading-animation">
+                    <div class="paw-prints">
+                        <div class="paw">•</div>
+                        <div class="paw">•</div>
+                        <div class="paw">•</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 결과 페이지 -->
         <div id="result-page" class="page">
-            <div class="result-card">
+
                 <!-- 카드 헤더 -->
                 <div class="card-header">
                     <div class="card-title" id="result-type"></div>
@@ -1623,19 +1875,25 @@
                     <div class="section-title">캐릭터 정보</div>
                     <div class="character-desc" id="detailed-desc"></div>
                 </div>
-            </div>
-            
-
             
             <div class="action-buttons">
                 <button class="btn" onclick="shareResult()">공유하기</button>
                 <button class="btn" onclick="restartTest()">다시 테스트하기</button>
             </div>
             
-            <!-- 광고 영역 -->
-            <div id="ad-top" style="margin: 20px 0; text-align: center;"></div>
-            <div id="ad-middle" style="margin: 20px 0; text-align: center;"></div>
-            <div id="ad-bottom" style="margin: 20px 0; text-align: center;"></div>
+            <!-- 결과 광고 영역 -->
+            <div class="result-ad-container">
+                <div class="web-ad vertical-ad result-vertical-ad">
+                    <ins class="kakao_ad_area" data-ad-unit="DAN-sTxaqJ3QUaK5cRST" data-ad-width="160" data-ad-height="600"></ins>
+                </div>
+                <div class="mobile-ad-group">
+                    <div class="mobile-ad">
+                        <ins class="kakao_ad_area" data-ad-unit="DAN-sZg1n4LhRfnzN6YQ" data-ad-width="320" data-ad-height="50"></ins>
+                    </div>
+                </div>
+            </div>
+            
+
             
 
         </div>
@@ -2304,7 +2562,29 @@
         // 최종 결과 계산
         function calculateFinalResult() {
             totalScore = userAnswers.reduce((sum, score) => sum + score, 0);
-            calculateResult();
+            
+            // 로딩 페이지 표시
+            showLoadingPage();
+            
+            // 2초 후 결과 표시
+            setTimeout(() => {
+                calculateResult();
+            }, 2000);
+        }
+        
+        // 로딩 페이지 표시
+        function showLoadingPage() {
+            // 로딩 페이지에 램덤 고양이 이미지 설정
+            try {
+                const availableImages = getAvailableImages();
+                const randomIndex = Math.floor(Math.random() * availableImages.length);
+                document.getElementById('loading-cat-img').src = 'images/loading.png';
+            } catch (error) {
+                const randomIndex = Math.floor(Math.random() * mainCatImages.length);
+                document.getElementById('loading-cat-img').src = 'images/loading.png';
+            }
+            
+            showPage('loading-page');
         }
         
         // 캐릭터 반응
@@ -2376,6 +2656,8 @@
             
             showPage('result-page');
         }
+        
+
         
         // 상세 정보 표시
         function displayDetailedInfo(result) {
@@ -2676,5 +2958,9 @@
             }
         }
     </script>
+    
+
 </body>
 </html>
+    
+    <script type="text/javascript" src="https://t1.daumcdn.net/kas/static/ba.min.js" async></script>
